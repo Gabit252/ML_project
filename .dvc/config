@@ -1,0 +1,7 @@
+[core]
+    remote = myremote
+['remote "myremote"']
+    url = s3://my-bucket/
+    access_key_id = minioadmin
+    secret_access_key = minioadmin
+    endpointurl = http://localhost:9000
