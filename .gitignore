@@ -1,6 +1,4 @@
 venv/
 *.pkl/
 __pycache__/
-data/
-mlruns/
-minio_data/
+artifacts/

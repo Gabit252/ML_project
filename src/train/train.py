@@ -58,7 +58,6 @@ def train_model(config):
     columns = ['PC1','PC2'],
     index = X.columns)
     
-    mlflow.autolog()
     mlflow.set_experiment(config['mlflow']['experiment_name'])
     with mlflow.start_run():
         Grid.fit(X_train, y_train)
@@ -71,7 +70,7 @@ def train_model(config):
         auc_score = auc(fpr, tpr)
 
         #Log AUC score
-        #mlflow.log_metric("AUC", auc_score)
+        mlflow.log_metric("AUC", auc_score)
 
         # Plot ROC Curve
         plt.figure(figsize=(8, 6))
@@ -90,7 +89,7 @@ def train_model(config):
         plt.close()
 
         # Log ROC curve image in MLflow
-        #mlflow.log_artifact(roc_curve_path)
+        mlflow.log_artifact(roc_curve_path)
         
         cm = confusion_matrix(y_test, preds)
 
@@ -114,7 +113,7 @@ def train_model(config):
         plt.savefig(confusion_matrix_png)
         plt.close()
         
-        #mlflow.log_artifact(confusion_matrix_png)
+        mlflow.log_artifact(confusion_matrix_png)
         
         # Визуализируем данные в пространстве главных компонент
         plt.figure(figsize=(8,6))
@@ -128,7 +127,7 @@ def train_model(config):
         plt.savefig(PCA_png)
         plt.close()
         
-       #mlflow.log_artifact(PCA_png)
+        mlflow.log_artifact(PCA_png)
         
         # Визуализация вклада признаков в главные компоненты с помощью тепловой карты
         plt.figure(figsize=(10,6))
@@ -141,18 +140,18 @@ def train_model(config):
         plt.savefig(PCA_heatmap_png)
         plt.close()
         
-        #mlflow.log_artifact(PCA_heatmap_png)
+        mlflow.log_artifact(PCA_heatmap_png)
 
-        #mlflow.log_params(model_params)
-        #mlflow.log_param("test_size", test_size)
-        #mlflow.log_metric("accuracy", acc)
-        #mlflow.log_metric("precision", prec)
+        mlflow.log_params(model_params)
+        mlflow.log_param("test_size", test_size)
+        mlflow.log_metric("accuracy", acc)
+        mlflow.log_metric("precision", prec)
         
         
                 
         model_path = "models/model.pkl"
         joblib.dump(Grid, model_path)
-        #mlflow.sklearn.log_model(Grid, "model")
+        mlflow.sklearn.log_model(Grid, "model")
         print(f"Model trained with accuracy: {acc}")
         
 
