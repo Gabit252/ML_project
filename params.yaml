@@ -1,0 +1,19 @@
+data:
+  minio_endpoint: "http://localhost:9000"
+  bucket: "my-bucket"
+  object_key: "Cancer_Data.csv"
+  local_path: "data/raw/Cancer_Data.csv"
+
+preprocess:
+  drop_columns: ["Unnamed: 32", "id"]
+
+train:
+  test_size: 0.2
+  random_state: 42
+  n_components: 2
+  model_params:
+    max_iter: 1000
+    random_state: 42
+
+mlflow:
+  experiment_name: "Cancer_Classification"
